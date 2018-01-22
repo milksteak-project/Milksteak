@@ -18,8 +18,12 @@ mkdir $HOME/usr/share/milksteak
 mv $HOME/usr/README.md $HOME/usr/share/milksteak/README.md
 mv $HOME/usr/milksteak.png $HOME/usr/share/milksteak/milksteak.png
 chflags hidden $HOME/usr
-echo 'export PATH=$HOME/usr/bin:$HOME/usr/sbin:$PATH' >> $HOME/.bash_profile
+cat <<EOT >> $HOME/.bash_profile
 
+
+export PATH=$HOME/usr/bin:$HOME/usr/sbin:$PATH
+
+EOT
 $HOME/usr/bin/steak install tiv
 tiv $HOME/usr/share/milksteak/milksteak.png
 echo
