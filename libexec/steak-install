@@ -1,0 +1,19 @@
+#!/bin/bash
+# Usage: steak install <name>
+# Summary: Install a package
+set -e
+
+name=$1
+pkg=$HOME/usr/etc/packages/$name
+
+echo ">>>>>>>> Installing Package: $name ..."
+
+mkdir -p $HOME/usr/packages
+rm -rf $pkg
+
+git clone git@github.com:milksteak-project/$name.git $pkg
+
+cd $pkg
+bash $name.sh
+
+echo "Done!"
