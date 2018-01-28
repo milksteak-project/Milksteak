@@ -12,7 +12,9 @@ pkgdir=$HOME/usr/etc/packages/$name
 pkg=$HOME/usr/etc/packages/$name/$name.sh
 
 echo "═══════════════════════════════════════════════════════════════════════════"
-echo ">>>>>>>> Downloading installer: $name ..."
+echo ">>>>>>>> Fetching package: $name"
 wget -O $pkg https://raw.githubusercontent.com/milksteak-project/steaks/master/packages/$name/$name.sh -q --show-progress
 
+{
 /bin/bash $pkgdir/$name.sh
+} &> /dev/null
