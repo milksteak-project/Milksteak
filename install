@@ -56,8 +56,8 @@ fi
 
 if [ -f $HOME/.bashrc -a -f $HOME/.bash_pathmanip ]; then
   echo "
-path-prepend $HOME/bin
-path-prepend $HOME/sbin" >> $HOME/.bashrc
+path-prepend $HOME/usr/bin
+path-prepend $HOME/usr/sbin" >> $HOME/.bashrc
 elif [ -f $HOME/.bashrc -a ! -f $HOME/.bash_pathmanip ]; then
    echo "
 PATH=$HOME/usr/bin:$HOME/usr/sbin/:$PATH" >> $HOME/.bashrc
