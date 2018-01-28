@@ -54,16 +54,16 @@ else
     ln -s  $HOME/usr/libexec/steak /usr/local/bin/steak
 fi
 
-if [ -f $HOME/.bashrc ]; then
+if [ -f $HOME/.bashrc -a -f $HOME/.bash_pathmanip ]; then
+  echo "
+path-prepend $HOME/bin
+path-prepend $HOME/sbin" >> $HOME/.bashrc
+elif [ -f $HOME/.bashrc -a ! -f $HOME/.bash_pathmanip ]; then
    echo "
 PATH=$HOME/usr/bin:$HOME/usr/sbin/:$PATH" >> $HOME/.bashrc
 elif [ -f $HOME/.profile ]; then
 	echo "
 PATH=$HOME/usr/bin:$HOME/usr/sbin/:$PATH" >> $HOME/.profile
-elif [ -f $HOME/.bash_pathmanip ]; then
-  echo "
-path-prepend $HOME/bin
-path-prepend $HOME/sbin" >> $HOME/.bashrc
 else
 	echo "
 PATH=$HOME/usr/bin:$HOME/usr/sbin/:$PATH" >> $HOME/.bash_profile
