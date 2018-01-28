@@ -6,13 +6,19 @@ set -e
 name=$1
 
 function update {
-  name=$1
-  pkg=$HOME/usr/etc/milksteak/$name
 
-  echo Updating $name
+  name=$1
+  pkg=$HOME/usr/etc/packages/$name
+
+  mkdir -p $HOME/usr/packages
+  rm -rf $pkg
+
+  echo "═══════════════════════════════════════════════════════════════════════════"
+  echo ">>>>>>>> Updating package: $name ..."
+  wget -O $pkg https://github.com/sigma-1/steaks/blob/master/packages/$name/$name.sh
+
   cd $pkg
-  git pull
-  bash *.sh
+  /bin/bash $name.sh
 }
 
 if [ $name ]

@@ -6,14 +6,12 @@ set -e
 name=$1
 pkg=$HOME/usr/etc/packages/$name
 
-echo ">>>>>>>> Installing Package: $name ..."
-
 mkdir -p $HOME/usr/packages
 rm -rf $pkg
 
-git clone https://github.com/milksteak-project/$name.git $pkg
+echo "═══════════════════════════════════════════════════════════════════════════"
+echo ">>>>>>>> Downloading installer: $name ..."
+wget -O $pkg https://github.com/sigma-1/steaks/blob/master/packages/$name/$name.sh
 
 cd $pkg
-bash $name.sh
-
-echo "Done!"
+/bin/bash $name.sh
