@@ -1,0 +1,8 @@
+#!/bin/bash
+# Usage: steak info <name>
+# Summary: Get package info
+set -e
+
+name=$1
+
+/bin/bash <(curl -s https://raw.githubusercontent.com/milksteak-project/steaks/master/packages/$name/info.sh)
