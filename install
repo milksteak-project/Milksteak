@@ -1,8 +1,9 @@
 #!/bin/bash
 
+# Milksteak Installer
 
-echo	" This will install the Milksteak Package Manager to $HOME/usr."
-read -p " Do you wish to continue? (y/n) " -n 1 -r
+echo	"This will install the Milksteak Package Manager to $HOME/usr."
+read -p "Do you wish to continue? (y/n) " -n 1 -r
 if [[ ! $REPLY =~ ^[Yy]$ ]]
 then
     [[ "$0" = "$BASH_SOURCE" ]] && exit 1 || return 1
@@ -16,16 +17,13 @@ mkdir $HOME/usr/share/bpm
 mv $HOME/usr/LICENSE $HOME/usr/share/bpm/LICENSE
 mkdir $HOME/usr/share/milksteak
 mv $HOME/usr/README.md $HOME/usr/share/milksteak/README.md
-mv $HOME/usr/milksteak.png $HOME/usr/share/milksteak/milksteak.png
 chflags hidden $HOME/usr
 cat <<EOT >> $HOME/.bash_profile
-
 
 export PATH=$HOME/usr/bin:$HOME/usr/sbin:$PATH
 
 EOT
-$HOME/usr/bin/steak install tiv
-tiv $HOME/usr/share/milksteak/milksteak.png
+
 echo
 echo 	" Milksteak v0.0.1 has been successfully installed to $HOME/usr."
 echo	" Type 'steak help' for more info."
