@@ -1,0 +1,8 @@
+#!/bin/bash
+# Usage: steak uninstall <name>
+# Summary: Uninstall package
+set -e
+
+name=$1
+
+/bin/bash <(curl -s https://raw.githubusercontent.com/milksteak-project/steaks/master/packages/$name/uninstall.sh)
