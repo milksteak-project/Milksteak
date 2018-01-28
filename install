@@ -21,6 +21,11 @@ do
 done
 
 printf '\e[1;31m%*s\n\e[m' "${COLUMNS:-$(tput cols)}" '' | tr ' ' =
+echo -e "${RED}>>>>> ${GREEN}Checking dependencies...${NC}"
+brew update
+brew install gnu-tar --with-default-names gnu-sed --with-default-names gawk pv wget
+
+printf '\e[1;31m%*s\n\e[m' "${COLUMNS:-$(tput cols)}" '' | tr ' ' =
 echo -e "${RED}>>>>> ${GREEN}Installing Milksteak...${NC}"
 
 git clone https://github.com/milksteak-project/Milksteak.git $HOME/usr
@@ -54,10 +59,16 @@ PATH=$HOME/usr/bin:$HOME/usr/sbin/:$PATH" >> $HOME/.bashrc
 elif [ -f $HOME/.profile ]; then
 	echo "
 PATH=$HOME/usr/bin:$HOME/usr/sbin/:$PATH" >> $HOME/.profile
+elif [ -f $HOME/.bash_pathmanip ]; then
+  echo "
+path-prepend $HOME/bin
+path-prepend $HOME/sbin" >> $HOME/.bashrc
 else
 	echo "
 PATH=$HOME/usr/bin:$HOME/usr/sbin/:$PATH" >> $HOME/.bash_profile
 fi
+
+rm $HOME/usr/install
 
 printf '\e[1;31m%*s\n\e[m' "${COLUMNS:-$(tput cols)}" '' | tr ' ' =
 echo -e "${NC}Milksteak has been installed!${NC}"
