@@ -5,6 +5,10 @@ set -e
 
 name=$1
 
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+NC='\033[0m' # No Color
+
 function update {
 
   name=$1
@@ -15,11 +19,11 @@ function update {
   pkgdir=$HOME/usr/etc/packages/$name
   pkg=$HOME/usr/etc/packages/$name/$name.sh
 
-  echo "═══════════════════════════════════════════════════════════════════════════"
-  echo ">>>>>>>> Downloading installer: $name ..."
+  printf '\e[1;31m%*s\n\e[m' "${COLUMNS:-$(tput cols)}" '' | tr ' ' =
+  echo -e "${RED}>>>>>>>> ${NC}Updating package: ${GREEN}$name${NC}"
   wget -O $pkg https://raw.githubusercontent.com/milksteak-project/steaks/master/packages/$name/$name.sh -q --show-progress
 
-  /bin/bash $pkgdir/$name.sh
+  source $pkgdir/$name.sh
 }
 
 if [ $name ]
