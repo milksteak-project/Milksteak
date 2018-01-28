@@ -15,7 +15,7 @@ pkgdir=$HOME/usr/etc/packages/$name
 pkg=$HOME/usr/etc/packages/$name/$name.sh
 
 printf '\e[1;31m%*s\n\e[m' "${COLUMNS:-$(tput cols)}" '' | tr ' ' =
-echo -e "${RED}>>>>>>>> ${NC}Fetching package: ${GREEN}$name${NC}"
-wget -O $pkg https://raw.githubusercontent.com/milksteak-project/steaks/master/packages/$name/$name.sh -q --show-progress
+echo -e "${RED}>>>>>>>> ${NC}Fetching resources: ${GREEN}$name${NC}"
+wget -O $pkg https://raw.githubusercontent.com/milksteak-project/steaks/master/packages/$name/$name.sh -q
 
 source $pkgdir/$name.sh
