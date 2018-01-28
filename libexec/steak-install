@@ -4,14 +4,15 @@
 set -e
 
 name=$1
-mkdir -p $HOME/usr/packages
-pkg=$HOME/usr/etc/packages/$name
+
+rm -rf $HOME/usr/etc/packages/$name
+mkdir -p $HOME/usr/etc/packages/$name
+
+pkgdir=$HOME/usr/etc/packages/$name
+pkg=$HOME/usr/etc/packages/$name/$name.sh
 
 echo "═══════════════════════════════════════════════════════════════════════════"
 echo ">>>>>>>> Downloading installer: $name ..."
-wget -O $pkg https://github.com/sigma-1/steaks/blob/master/packages/$name/$name.sh
+wget -O $pkg https://raw.githubusercontent.com/milksteak-project/steaks/master/packages/$name/$name.sh -q --show-progress
 
-cd $pkg
-/bin/bash $name.sh
-cd ..
-rm -rf $pkg
+/bin/bash $pkgdir/$name.sh
