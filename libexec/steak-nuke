@@ -1,0 +1,34 @@
+#!/bin/bash
+
+RED='\033[0;31m'
+NC='\033[0m' # No Color
+
+printf '\e[1;31m%*s\n\e[m' "${COLUMNS:-$(tput cols)}" '' | tr ' ' =
+echo -e "${RED}WARNING: This will completely nuke milksteak to oblivion."
+while true
+do
+	read -r -p "Are you sure you want to uninstall milksteak? (y/n) " choice
+		case "$choice" in
+		n|N)	exit 0;;
+		y|Y)	break;;
+		*)	echo "Invalid argument.";;
+	esac
+done
+
+while true
+do
+	read -r -p "Double sure? (y/n) " choice
+		case "$choice" in
+		n|N)	exit 0;;
+		y|Y)	break;;
+		*)	echo "Invalid argument.";;
+	esac
+done
+
+unlink /usr/local/bin/steak
+rm -rf $HOME/usr
+
+echo -e "${NC}Milksteak has been successfully uninstalled.${NC}"
+echo -e "${NC}Don't forget to also remove it from your PATH.${NC}"
+printf '\e[1;31m%*s\n\e[m' "${COLUMNS:-$(tput cols)}" '' | tr ' ' =
+echo -e "${NC}"

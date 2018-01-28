@@ -69,13 +69,6 @@ else
 PATH=$HOME/usr/bin:$HOME/usr/sbin/:$PATH" >> $HOME/.bash_profile
 fi
 
-touch $HOME/usr/sbin/steak-uninstall
-chmod 755 $HOME/usr/sbin/steak-uninstall
-echo "#!/bin/bash
-unlink /usr/local/bin/steak
-rm -rf $HOME/usr
-" >> $HOME/usr/sbin/steak-uninstall
-
 rm $HOME/usr/install
 
 printf '\e[1;31m%*s\n\e[m' "${COLUMNS:-$(tput cols)}" '' | tr ' ' =

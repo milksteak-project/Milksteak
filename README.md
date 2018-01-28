@@ -1,31 +1,28 @@
 # Milksteak Package Manager
 
-The Milksteak Package Manager is written in BASH and is a fork of the [bpm package manager](https://github.com/ngauthier/bpm) by Sam Stephenson, Nick Quaranto & 37signals.
+The Milksteak Package Manager is a fork of bpm, the [Bash Package Manager](https://github.com/ngauthier/bpm), by Sam Stephenson, Nick Quaranto & 37signals.
 
-Milksteak is intended for macOS 10.11+ as a companion to [Homebrew](https://brew.sh/) for installing more obscure packages that are not provided by Homebrew. Keep in mind that Homebrew is required for installing packages with Milksteak.
-
-Milksteak installs packages to its own environment within the current user's home directory ($HOME/usr). The directory is hidden by default but you can easily unhide it by executing:
-
-	chflags nohidden $HOME/usr
-
-Unlike the bpm package manager, which relies on git repos containing scripts or prebuilt binaries within a "bin" directory, Milksteak utilizes build scripts similar to Homebrew and MacPorts and works pretty much the same. But instead of installing packages to /usr/local it keeps the packages "sandboxed" within the $HOME/usr directory.
+I just forked this for personal use to install whatever cool stuff I've found on GitHub, that other package managers don't provide. Milksteak uses its own repo and is not compatible with the original bpm setup. Milksteak is intended to be used on macOS 10.11+, it requires [Homebrew](https://github.com/Homebrew), assumes that you're using the [GNU command line tools](https://www.topbug.net/blog/2013/04/14/install-and-use-gnu-command-line-tools-in-mac-os-x/) instead of the default BSD ones, as well as GCC 7 instead of whatever it is that Apple provides.
 
 ## Installing Milksteak
 
     /bin/bash <(curl -s https://raw.githubusercontent.com/milksteak-project/milksteak/master/install)
 
-## Installing Packages
+Milksteak installs itself and its packages to its own environment within the current user's home directory. The directory is hidden by default but you can easily unhide it by executing:
+
+	chflags nohidden $HOME/usr
+
+## Installing/Uninstalling Packages
 
 Simple:
 
 	steak install <package name>
+	steak uninstall <package name>
 
 ## Uninstalling Milksteak
 
-Milksteak can easily be uninstalled via:
-
-	rm -rf $HOME/usr
+	steak nuke
 
 ## Notes
 
-This is a work in progress. There is currently no way of listing available/installed packages yet, except just browsing through the milksteak-project github page.
+This is very much a messy work in progress.
