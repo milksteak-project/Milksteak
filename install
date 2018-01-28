@@ -2,28 +2,40 @@
 
 # Milksteak Installer
 
-echo	"This will install the Milksteak Package Manager to $HOME/usr."
-read -p "Do you wish to continue? (y/n) " -n 1 -r
-if [[ ! $REPLY =~ ^[Yy]$ ]]
-then
-    [[ "$0" = "$BASH_SOURCE" ]] && exit 1 || return 1
-fi
+echo "═══════════════════════════════════════════════════════════════════════════"
 
-echo "Installing Milksteak..."
-echo
+while true
+do
+  read -r -p "Would you like to install the Milksteak Package Manager? (y/n) " choice
+    case "$choice" in
+      n|N)  exit 0;;
+      y|Y)  echo
+            sleep 2
+            break;;
+    *) echo 'Response not valid';;
+  esac
+done
+
+echo ">>>>> Installing Milksteak..."
+
+{
 git clone https://github.com/milksteak-project/Milksteak.git $HOME/usr
 ln -s $HOME/usr/libexec/steak $HOME/usr/bin/steak
+} &> /dev/null
+
 mkdir $HOME/usr/share/bpm
 mv $HOME/usr/LICENSE $HOME/usr/share/bpm/LICENSE
+
 mkdir $HOME/usr/share/milksteak
 mv $HOME/usr/README.md $HOME/usr/share/milksteak/README.md
+
 chflags hidden $HOME/usr
-cat <<EOT >> $HOME/.bash_profile
 
-export PATH=$HOME/usr/bin:$HOME/usr/sbin:$PATH
+echo "
+export PATH=$HOME/usr/bin:$HOME/usr/sbin:$PATH" >> $HOME/.bash_profile
 
-EOT
+sleep 2
 
-echo
-echo 	" Milksteak v0.0.1 has been successfully installed to $HOME/usr."
-echo	" Type 'steak help' for more info."
+echo "Done!"
+echo "Type 'steak help' for more info."
+echo "═══════════════════════════════════════════════════════════════════════════"
