@@ -1,6 +1,6 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # Usage: steak info <name>
 # Summary: List installed packages
 set -e
 
-ls $HOME/usr/etc/packages
+ls -1 $HOME/usr/etc/packages

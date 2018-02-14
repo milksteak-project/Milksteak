@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # Usage: steak commands
 # Summary: List all milksteak commands
 # Help: This command is mostly used for autocompletion in various shells, and for `steak help`.

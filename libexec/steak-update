@@ -1,15 +1,11 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # Usage: steak update [package name]
 # Summary: Update one or all steak packages
 set -e
 
 name=$1
 
-RED='\033[0;31m'
-GREEN='\033[0;32m'
-NC='\033[0m' # No Color
-
-function update {
+function update() {
 
   name=$1
 
@@ -19,11 +15,11 @@ function update {
   pkgdir=$HOME/usr/etc/packages/$name
   pkg=$HOME/usr/etc/packages/$name/$name.sh
 
-  printf '\e[1;31m%*s\n\e[m' "${COLUMNS:-$(tput cols)}" '' | tr ' ' =
-  echo -e "${RED}>>>>>>>> ${NC}Updating package: ${GREEN}$name${NC}"
+  printf '\e[1m%*s\n\e[m' "${COLUMNS:-$(tput cols)}" '' | tr ' ' =
+  echo -e ">>>>> Updating package: $name"
   wget -O $pkg https://raw.githubusercontent.com/milksteak-project/steaks/master/packages/$name/$name.sh -q --show-progress
-
   source $pkgdir/$name.sh
+  echo
 }
 
 if [ $name ]

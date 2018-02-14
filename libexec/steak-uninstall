@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # Usage: steak uninstall <name>
 # Summary: Uninstall package
 set -e

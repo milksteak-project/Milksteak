@@ -1,58 +1,53 @@
-#!/bin/bash
-
+#!/usr/bin/env bash
 # Milksteak Installer
 
-RED='\033[0;31m'
-GREEN='\033[0;32m'
-NC='\033[0m' # No Color
+printf '\e[1m%*s\n\e[m' "${COLUMNS:-$(tput cols)}" '' | tr ' ' =
+echo -e "You are about to install the Milksteak Package Manager!"
 
-printf '\e[1;31m%*s\n\e[m' "${COLUMNS:-$(tput cols)}" '' | tr ' ' =
-echo -e "${GREEN}You are about to install the Milksteak Package Manager!${NC}"
-
-while true
-do
-  read -r -p "Would you like to continue? (y/n) " choice
-    case "$choice" in
-      n|N)  exit 0;;
-      y|Y)  sleep 2
-            break;;
-    *) echo -e "Response not valid";;
-  esac
+while true ; do
+	read -r -p "Proceed? (y/n) " choice
+	case "$choice" in
+		n|N)	exit 0
+			;;
+		y|Y)	break
+			;;
+		*)		echo -e "Invalid argument."
+			;;
+	esac
 done
 
-printf '\e[1;31m%*s\n\e[m' "${COLUMNS:-$(tput cols)}" '' | tr ' ' =
-echo -e "${RED}>>>>> ${GREEN}Checking dependencies...${NC}"
-brew update
-brew install gnu-tar --with-default-names gnu-sed --with-default-names gawk pv wget
+echo -e ">>>>> Installing Milksteak..."
 
-printf '\e[1;31m%*s\n\e[m' "${COLUMNS:-$(tput cols)}" '' | tr ' ' =
-echo -e "${RED}>>>>> ${GREEN}Installing Milksteak...${NC}"
+function milksteak_install() {
+	git clone https://github.com/milksteak-project/Milksteak.git $HOME/usr
+	chflags hidden $HOME/usr
+	mkdir $HOME/usr/bin
+	mkdir $HOME/usr/etc
+	mkdir $HOME/usr/include
+	mkdir $HOME/usr/lib
+	mkdir $HOME/usr/opt
+	mkdir $HOME/usr/opt/java
+	mkdir $HOME/usr/sbin
+	mkdir $HOME/usr/share
+	mkdir -p $HOME/usr/share/bpm
+	mkdir -p $HOME/usr/share/milksteak
+	mkdir -p $HOME/usr/share/man
+	mkdir $HOME/usr/tmp
+	mv $HOME/usr/LICENSE $HOME/usr/share/bpm/LICENSE.txt
+	mv $HOME/usr/README.md $HOME/usr/share/milksteak/README.txt
+	rm $HOME/usr/install
 
-git clone https://github.com/milksteak-project/Milksteak.git $HOME/usr
-chflags hidden $HOME/usr
+	if [ -f /usr/local/bin/steak ]
+	then
+		rm /usr/local/bin/steak
+		ln -s  $HOME/usr/libexec/steak /usr/local/bin/steak
+	else
+		ln -s  $HOME/usr/libexec/steak /usr/local/bin/steak
+	fi
+}
+milksteak_install &> /dev/null
 
-mkdir $HOME/usr/bin
-mkdir $HOME/usr/etc
-mkdir $HOME/usr/include
-mkdir $HOME/usr/lib
-mkdir $HOME/usr/opt
-mkdir $HOME/usr/opt/java
-mkdir $HOME/usr/sbin
-mkdir $HOME/usr/share
-mkdir -p $HOME/usr/share/bpm
-mkdir -p $HOME/usr/share/milksteak
-mkdir $HOME/usr/tmp
-
-mv $HOME/usr/LICENSE $HOME/usr/share/bpm/LICENSE.txt
-mv $HOME/usr/README.md $HOME/usr/share/milksteak/README.txt
-
-if [ -f /usr/local/bin/steak ]
-then
-    rm /usr/local/bin/steak
-    ln -s  $HOME/usr/libexec/steak /usr/local/bin/steak
-else
-    ln -s  $HOME/usr/libexec/steak /usr/local/bin/steak
-fi
+echo -e ">>>>> Adding milksteak to PATH..."
 
 if [ -f $HOME/.bashrc -a -f $HOME/.bash_pathmanip ]; then
   echo "
@@ -69,10 +64,6 @@ else
 PATH=$HOME/usr/bin:$HOME/usr/sbin/:$PATH" >> $HOME/.bash_profile
 fi
 
-rm $HOME/usr/install
-
-printf '\e[1;31m%*s\n\e[m' "${COLUMNS:-$(tput cols)}" '' | tr ' ' =
-echo -e "${NC}Milksteak has been installed!${NC}"
-echo -e "${NC}Type '${GREEN}steak help${NC}' for more info.${NC}"
-printf '\e[1;31m%*s\e[m' "${COLUMNS:-$(tput cols)}" '' | tr ' ' =
-echo -e "${NC}"
+echo -e "Milksteak has been successfully installed!"
+echo -e "Type 'steak help' for more info."
+echo

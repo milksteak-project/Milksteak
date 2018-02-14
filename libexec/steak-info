@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # Usage: steak info <name>
 # Summary: Get package info
 set -e

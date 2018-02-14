@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # Usage: steak install <name>
 # Summary: Install a package
 set -e
@@ -10,8 +10,7 @@ mkdir -p $HOME/usr/etc/packages/$name
 pkgdir=$HOME/usr/etc/packages/$name
 pkg=$HOME/usr/etc/packages/$name/$name.sh
 
-printf '\e[1;31m%*s\n\e[m' "${COLUMNS:-$(tput cols)}" '' | tr ' ' =
+printf '\e[1m%*s\n\e[m' "${COLUMNS:-$(tput cols)}" '' | tr ' ' =
 echo -e ">>>>> $name will be installed to $HOME/usr"
 wget -O $pkg https://raw.githubusercontent.com/milksteak-project/steaks/master/packages/$name/$name.sh -q
-
 source $pkgdir/$name.sh
