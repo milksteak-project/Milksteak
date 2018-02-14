@@ -5,17 +5,13 @@ set -e
 
 name=$1
 
-RED='\033[0;31m'
-GREEN='\033[0;32m'
-NC='\033[0m' # No Color
-
 mkdir -p $HOME/usr/etc/packages/$name
 
 pkgdir=$HOME/usr/etc/packages/$name
 pkg=$HOME/usr/etc/packages/$name/$name.sh
 
 printf '\e[1;31m%*s\n\e[m' "${COLUMNS:-$(tput cols)}" '' | tr ' ' =
-echo -e "${RED}>>>>>>>> ${NC}Fetching resources: ${GREEN}$name${NC}"
+echo -e ">>>>> $name will be installed to $HOME/usr"
 wget -O $pkg https://raw.githubusercontent.com/milksteak-project/steaks/master/packages/$name/$name.sh -q
 
 source $pkgdir/$name.sh
