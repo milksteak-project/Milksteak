@@ -1,8 +1,10 @@
 #!/usr/bin/env bash
-# Usage: steak uninstall <name>
+# Usage: steak uninstall <package-name>
 # Summary: Uninstall package
+
 set -e
 
 name=$1
 
-/bin/bash <(curl -s https://raw.githubusercontent.com/milksteak-project/steaks/master/packages/$name/uninstall.sh)
+printf '\e[1m%*s\n\e[m' "${COLUMNS:-$(tput cols)}" '' | tr ' ' =
+/usr/bin/env bash <(curl -s https://raw.githubusercontent.com/milksteak-project/steaks/master/packages/$name/uninstall.sh)

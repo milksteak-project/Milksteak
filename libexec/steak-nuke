@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
+# Usage: steak nuke
+# Summary: Uninstalls Milksteak completely along with all installed packages.
 
 RED='\033[0;31m'
 NC='\033[0m' # No Color
@@ -30,4 +32,3 @@ rm -rf $HOME/usr
 
 echo -e "Milksteak has been successfully uninstalled.${NC}"
 printf '\e[1;31m%*s\n\e[m' "${COLUMNS:-$(tput cols)}" '' | tr ' ' =
-echo -e "${NC}"

@@ -1,34 +1,16 @@
 #!/usr/bin/env bash
-# Usage: steak update [package name]
-# Summary: Update one or all steak packages
+# Usage: steak update
+# Summary: Update Milksteak
+
 set -e
 
-name=$1
-
 function update() {
-
-  name=$1
-
-  rm -rf $HOME/usr/etc/packages/$name
-  mkdir -p $HOME/usr/etc/packages/$name
-
-  pkgdir=$HOME/usr/etc/packages/$name
-  pkg=$HOME/usr/etc/packages/$name/$name.sh
-
-  printf '\e[1m%*s\n\e[m' "${COLUMNS:-$(tput cols)}" '' | tr ' ' =
-  echo -e ">>>>> Updating package: $name"
-  wget -O $pkg https://raw.githubusercontent.com/milksteak-project/steaks/master/packages/$name/$name.sh -q --show-progress
-  source $pkgdir/$name.sh
-  echo
+  git clone https://github.com/milksteak-project/milksteak.git $HOME/usr/tmp/milksteak
+  rm -rf $HOME/usr/libexec ; cp -r $HOME/usr/tmp/milksteak/libexec $HOME/usr/libexec
+  rm -rf $HOME/usr/tmp/milksteak
 }
 
-if [ $name ]
-then
-  update $name
-else
-  for pkg in $HOME/usr/etc/packages/*
-  do
-    name=`basename $pkg`
-    update $name
-  done
-fi
+printf '\e[1m%*s\n\e[m' "${COLUMNS:-$(tput cols)}" '' | tr ' ' =
+echo -e ">>>>> Updating Milksteak..."
+update &> /dev/null
+echo -e "Milksteak has been updated!"

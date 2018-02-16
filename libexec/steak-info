@@ -1,8 +1,10 @@
 #!/usr/bin/env bash
-# Usage: steak info <name>
+# Usage: steak info <package-name>
 # Summary: Get package info
+
 set -e
 
 name=$1
 
+printf '\e[1m%*s\n\e[m' "${COLUMNS:-$(tput cols)}" '' | tr ' ' =
 /bin/bash <(curl -s https://raw.githubusercontent.com/milksteak-project/steaks/master/packages/$name/info.sh)

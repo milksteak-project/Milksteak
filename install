@@ -2,10 +2,8 @@
 # Milksteak Installer
 
 printf '\e[1m%*s\n\e[m' "${COLUMNS:-$(tput cols)}" '' | tr ' ' =
-echo -e "You are about to install the Milksteak Package Manager!"
-
 while true ; do
-	read -r -p "Proceed? (y/n) " choice
+	read -r -p "Do you want to install Milksteak? (y/n) " choice
 	case "$choice" in
 		n|N)	exit 0
 			;;
@@ -16,54 +14,60 @@ while true ; do
 	esac
 done
 
-echo -e ">>>>> Installing Milksteak..."
-
 function milksteak_install() {
 	git clone https://github.com/milksteak-project/Milksteak.git $HOME/usr
-	chflags hidden $HOME/usr
+
 	mkdir $HOME/usr/bin
 	mkdir $HOME/usr/etc
 	mkdir $HOME/usr/include
 	mkdir $HOME/usr/lib
 	mkdir $HOME/usr/opt
-	mkdir $HOME/usr/opt/java
 	mkdir $HOME/usr/sbin
 	mkdir $HOME/usr/share
-	mkdir -p $HOME/usr/share/bpm
-	mkdir -p $HOME/usr/share/milksteak
+	mkdir -p $HOME/usr/share/doc
+	mkdir -p $HOME/usr/share/doc/bpm
+	mkdir -p $HOME/usr/share/doc/milksteak
 	mkdir -p $HOME/usr/share/man
 	mkdir $HOME/usr/tmp
-	mv $HOME/usr/LICENSE $HOME/usr/share/bpm/LICENSE.txt
-	mv $HOME/usr/README.md $HOME/usr/share/milksteak/README.txt
+	mv $HOME/usr/LICENSE $HOME/usr/share/doc/bpm/LICENSE.txt
+	mv $HOME/usr/README.md $HOME/usr/share/doc/milksteak/README.md
 	rm $HOME/usr/install
+	rm -rf $HOME/usr/.git
 
-	if [ -f /usr/local/bin/steak ]
-	then
+	if [ -f /usr/local/bin/steak ]; then
 		rm /usr/local/bin/steak
 		ln -s  $HOME/usr/libexec/steak /usr/local/bin/steak
 	else
 		ln -s  $HOME/usr/libexec/steak /usr/local/bin/steak
 	fi
+
+	chflags hidden $HOME/usr
 }
-milksteak_install &> /dev/null
 
-echo -e ">>>>> Adding milksteak to PATH..."
-
-if [ -f $HOME/.bashrc -a -f $HOME/.bash_pathmanip ]; then
-  echo "
+function milksteak_path(){
+	if [ -f $HOME/.bashrc -a -f $HOME/.bash_pathmanip ]; then
+  		echo "
 path-prepend $HOME/usr/bin
-path-prepend $HOME/usr/sbin" >> $HOME/.bashrc
-elif [ -f $HOME/.bashrc -a ! -f $HOME/.bash_pathmanip ]; then
-   echo "
-PATH=$HOME/usr/bin:$HOME/usr/sbin/:$PATH" >> $HOME/.bashrc
-elif [ -f $HOME/.profile ]; then
-	echo "
-PATH=$HOME/usr/bin:$HOME/usr/sbin/:$PATH" >> $HOME/.profile
-else
-	echo "
-PATH=$HOME/usr/bin:$HOME/usr/sbin/:$PATH" >> $HOME/.bash_profile
-fi
+path-prepend $HOME/usr/sbin
+path-prepend $HOME/usr/lib DYLD_LIBRARY_PATH" >> $HOME/.bashrc
+	elif [ -f $HOME/.bashrc -a ! -f $HOME/.bash_pathmanip ]; then
+   		echo "
+PATH=$HOME/usr/bin:$HOME/usr/sbin/:$PATH
+DYLD_LIBRARY_PATH=$HOME/usr/lib:$DYLD_LIBRARY_PATH" >> $HOME/.bashrc
+	elif [ -f $HOME/.profile ]; then
+		echo "
+PATH=$HOME/usr/bin:$HOME/usr/sbin/:$PATH
+DYLD_LIBRARY_PATH=$HOME/usr/lib:$DYLD_LIBRARY_PATH" >> $HOME/.profile
+	else
+		echo "
+PATH=$HOME/usr/bin:$HOME/usr/sbin/:$PATH
+DYLD_LIBRARY_PATH=$HOME/usr/lib:$DYLD_LIBRARY_PATH" >> $HOME/.bash_profile
+	fi
+}
 
+echo -e ">>>>> Installing Milksteak..."
+milksteak_install &> /dev/null
+echo -e ">>>>> Adding milksteak to PATH..."
+milksteak_path &> /dev/null
 echo -e "Milksteak has been successfully installed!"
 echo -e "Type 'steak help' for more info."
-echo
