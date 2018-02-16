@@ -4,7 +4,7 @@ I made this for personal use to install whatever cool stuff I've found on GitHub
 
 ## Installing Milksteak
 
-    /usr/env/bin bash <(curl -s https://raw.githubusercontent.com/milksteak-project/milksteak/master/install)
+    /usr/bin/env bash <(curl -s https://raw.githubusercontent.com/milksteak-project/milksteak/master/install)
 
 Milksteak installs itself and its packages into to its own environment within the current user's home directory. The directory is hidden by default but you can easily unhide it by executing:
 
