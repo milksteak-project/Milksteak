@@ -44,6 +44,7 @@ function milksteak_install() {
 	chflags hidden $HOME/usr
 }
 
+
 function milksteak_path(){
 	if [ -f $HOME/.bashrc -a -f $HOME/.bash_pathmanip ]; then
   		echo "
